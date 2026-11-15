@@ -1,6 +1,11 @@
 
 # Pipeline de Integração de Dados Climáticos e Geográficos do Brasil
 
+
+## Arquitetura do Projeto
+
+![Arquitetura do Pipeline](docs/arquitetura_pipeline_clima_brasil.png)
+
 ## 1. Visão geral
 
 Projeto de Engenharia de Dados desenvolvido para integrar informações geográficas e climáticas de municípios brasileiros.
