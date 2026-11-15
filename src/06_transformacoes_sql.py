@@ -3,7 +3,7 @@ from pathlib import Path
 import duckdb
 
 
-def transformar_dados():
+def transformar_dados() -> None:
     raiz = Path(__file__).resolve().parent.parent
 
     arquivo_entrada = (

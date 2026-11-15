@@ -41,7 +41,8 @@ def enriquecer_dados() -> pd.DataFrame:
 
     print(f"Duplicidades removidas: {total_duplicados}")
     print(
-        f"Registros com dados meteorológicos ausentes removidos: {total_nulos}")
+        f"Registros com dados meteorológicos ausentes removidos: {total_nulos}"
+    )
 
     # Carregar dados de referência do IBGE
     df_municipios = pd.read_parquet(
@@ -62,6 +63,12 @@ def enriquecer_dados() -> pd.DataFrame:
         validate="many_to_one"
     )
 
+    # Validar correspondência com o IBGE
+    if df_enriquecido["regiao"].isna().any():
+        raise ValueError(
+            "Existem municípios sem correspondência na base do IBGE."
+        )
+
     return df_enriquecido
 
 
@@ -69,8 +76,6 @@ if __name__ == "__main__":
     df = enriquecer_dados()
 
     caminho_saida = (
-
-
         Path(__file__).resolve().parent.parent
         / "data" / "processed"
     )

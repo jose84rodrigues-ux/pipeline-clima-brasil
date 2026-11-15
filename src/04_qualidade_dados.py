@@ -82,11 +82,17 @@ if __name__ == "__main__":
         raiz / "data" / "processed" / "clima_enriquecido.parquet"
     ]
 
-    if not arquivos:
-        raise FileNotFoundError("Nenhum arquivo Parquet encontrado.")
+arquivos_existentes = [
+    arquivo for arquivo in arquivos if arquivo.exists()
+]
+
+if not arquivos_existentes:
+    raise FileNotFoundError(
+        "Nenhum arquivo Parquet encontrado para os testes."
+    )
 
     df = pd.concat(
-        [pd.read_parquet(arquivo) for arquivo in arquivos],
+        [pd.read_parquet(arquivo) for arquivo in arquivos_existentes],
         ignore_index=True
     )
 

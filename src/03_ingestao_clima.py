@@ -54,7 +54,7 @@ def consultar_openmeteo(lote: pd.DataFrame) -> list:
     raise RuntimeError("Falha na consulta Open-Meteo.")
 
 
-def executar_ingestao():
+def executar_ingestao() -> None:
     raiz = Path(__file__).resolve().parent.parent
 
     arquivo_municipios = (

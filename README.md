@@ -90,6 +90,13 @@ pipeline-clima-brasil/
 └── README.md
 ```
 
+### Observação sobre os scripts
+
+- `02_teste_api_ibge.py`: script auxiliar para validação isolada da conexão com a API do IBGE.
+- `09_preparar_municipios.py`: script auxiliar utilizado para preparar a amostra de 230 municípios.
+- Ambos não fazem parte da execução automática do pipeline principal.
+
+
 ## 7. Tratamento e qualidade dos dados
 
 O projeto implementa:
@@ -102,6 +109,9 @@ O projeto implementa:
 - Criação de métricas climáticas.
 - Validação de esquema, valores nulos e duplicidades.
 - Verificação de limites válidos para as variáveis climáticas.
+- Ingestão de dados em lotes para otimizar as consultas às APIs.
+- Implementação de tentativas automáticas (retry) em caso de falhas nas requisições.
+- Tratamento de erros HTTP e definição de tempo limite (timeout) nas chamadas às APIs.
 
 Os resultados dos testes são disponibilizados em relatórios JSON e CSV.
 
@@ -117,7 +127,20 @@ Os resultados dos testes são disponibilizados em relatórios JSON e CSV.
 | Indicadores climáticos | 4 |
 | Testes de qualidade aprovados | 8 |
 
+
 ## 9. Como executar o projeto
+
+### Criar ambiente virtual
+
+```bash
+python -m venv .venv
+```
+
+### Ativar ambiente virtual no Windows
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
 
 ### Instalar dependências
 
@@ -131,7 +154,8 @@ pip install -r requirements.txt
 python src/08_executar_pipeline.py
 ```
 
-O pipeline realiza as etapas de ingestão, transformação, validação e exportação final.
+O pipeline realiza automaticamente as etapas de ingestão de dados das APIs IBGE e Open-Meteo, enriquecimento, transformações com Python e SQL, validação da qualidade e exportação final em arquivos Parquet particionados por ano e mês, com compressão Snappy.
+
 
 ## 10. Resultados e arquivos gerados
 
