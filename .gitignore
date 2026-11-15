@@ -1,0 +1,27 @@
+﻿.venv/
+__pycache__/
+*.py[cod]
+.env
+.ipynb_checkpoints/
+.DS_Store
+
+# Arquivos geográficos originais
+data/reference/BR_Municipios_2025.zip
+data/reference/BR_Municipios_2025/
+
+# Arquivos temporários
+*.tmp
+Thumbs.db
+
+# Dados intermediários gerados pelo pipeline
+data/raw/
+data/processed/
+
+# Preservar referências necessárias para execução
+!data/reference/
+
+# Exportação antiga do Databricks
+output/_SUCCESS
+output/ano=2026/
+
+

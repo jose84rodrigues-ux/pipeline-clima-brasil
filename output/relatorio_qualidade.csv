@@ -1,0 +1,9 @@
+﻿teste,quantidade,status
+esquema_invalido,0.0,APROVADO
+valores_nulos,0.0,APROVADO
+percentual_nulos,0.0,APROVADO
+duplicados,0.0,APROVADO
+temperaturas_invalidas,0.0,APROVADO
+umidades_invalidas,0.0,APROVADO
+precipitacoes_invalidas,0.0,APROVADO
+ventos_invalidos,0.0,APROVADO

@@ -1,0 +1,15 @@
+{
+    "total_registros": 165600,
+    "total_municipios": 230,
+    "testes": {
+        "esquema_invalido": 0,
+        "valores_nulos": 0,
+        "percentual_nulos": 0.0,
+        "duplicados": 0,
+        "temperaturas_invalidas": 0,
+        "umidades_invalidas": 0,
+        "precipitacoes_invalidas": 0,
+        "ventos_invalidos": 0
+    },
+    "status_geral": "APROVADO"
+}
