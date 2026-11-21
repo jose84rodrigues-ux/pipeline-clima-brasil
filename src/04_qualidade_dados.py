@@ -4,7 +4,9 @@ import pandas as pd
 import json
 
 
-def executar_testes(df: pd.DataFrame) -> dict:
+def executar_testes(
+    df: pd.DataFrame
+) -> dict[str, int | float]:
     resultados = {}
 
     # 1. Validar esquema
@@ -77,19 +79,20 @@ def executar_testes(df: pd.DataFrame) -> dict:
 if __name__ == "__main__":
     raiz = Path(__file__).resolve().parent.parent
     caminho_output = raiz / "output"
+    caminho_output.mkdir(parents=True, exist_ok=True)
 
     arquivos = [
         raiz / "data" / "processed" / "clima_enriquecido.parquet"
     ]
 
-arquivos_existentes = [
-    arquivo for arquivo in arquivos if arquivo.exists()
-]
+    arquivos_existentes = [
+        arquivo for arquivo in arquivos if arquivo.exists()
+    ]
 
-if not arquivos_existentes:
-    raise FileNotFoundError(
-        "Nenhum arquivo Parquet encontrado para os testes."
-    )
+    if not arquivos_existentes:
+        raise FileNotFoundError(
+            "Nenhum arquivo Parquet encontrado para os testes."
+        )
 
     df = pd.concat(
         [pd.read_parquet(arquivo) for arquivo in arquivos_existentes],

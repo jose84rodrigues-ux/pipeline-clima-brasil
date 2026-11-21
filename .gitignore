@@ -24,4 +24,12 @@ data/processed/
 output/_SUCCESS
 output/ano=2026/
 
+# Relatórios e dados gerados localmente
+output/clima_final/
+output/relatorio_qualidade.json
+output/relatorio_qualidade.csv
+
+# Arquivos de configuração locais
+.env.*
+!.env.example
 

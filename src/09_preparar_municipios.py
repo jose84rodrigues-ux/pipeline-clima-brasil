@@ -2,7 +2,7 @@ from pathlib import Path
 import pandas as pd
 
 
-def preparar_municipios():
+def preparar_municipios() -> None:
     raiz = Path(__file__).resolve().parent.parent
 
     # Ler dados climáticos atuais

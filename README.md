@@ -29,6 +29,18 @@ A amostra climática contempla 230 municípios de diferentes regiões brasileira
 | API IBGE | Identificação e informações dos municípios brasileiros |
 | API Open-Meteo | Dados climáticos históricos por coordenadas geográficas |
 
+
+### Autenticação e gerenciamento de credenciais
+
+As APIs utilizadas neste projeto são públicas e não exigem chaves de autenticação:
+
+- **IBGE:** consulta pública de informações geográficas e municipais.
+- **Open-Meteo:** consulta pública de dados climáticos históricos.
+
+Por esse motivo, o projeto não necessita de arquivo `.env` ou armazenamento de chaves de API.
+
+Em futuras integrações com fontes que exijam autenticação, as credenciais deverão ser armazenadas em variáveis de ambiente, utilizando `os.getenv()` ou arquivo `.env`, com proteção no `.gitignore`, evitando a exposição de informações sensíveis no GitHub.
+
 ### Variáveis climáticas
 
 - Temperatura (°C)
@@ -112,6 +124,9 @@ O projeto implementa:
 - Ingestão de dados em lotes para otimizar as consultas às APIs.
 - Implementação de tentativas automáticas (retry) em caso de falhas nas requisições.
 - Tratamento de erros HTTP e definição de tempo limite (timeout) nas chamadas às APIs.
+- Configuração do tamanho dos lotes e do intervalo entre requisições para controlar a frequência de consultas à API Open-Meteo.
+- Implementação de retry com até 3 tentativas e espera progressiva entre as tentativas em caso de falhas.
+- Utilização de timeout e validação de respostas HTTP para evitar falhas silenciosas na ingestão.
 
 Os resultados dos testes são disponibilizados em relatórios JSON e CSV.
 
@@ -156,6 +171,18 @@ python src/08_executar_pipeline.py
 
 O pipeline realiza automaticamente as etapas de ingestão de dados das APIs IBGE e Open-Meteo, enriquecimento, transformações com Python e SQL, validação da qualidade e exportação final em arquivos Parquet particionados por ano e mês, com compressão Snappy.
 
+### Configurações de ingestão
+
+O processo de ingestão climática possui parâmetros configuráveis no script `03_ingestao_clima.py`:
+
+| Parâmetro | Valor padrão | Descrição |
+|---|---:|---|
+| TAMANHO_LOTE | 10 | Municípios consultados por lote |
+| INTERVALO_ENTRE_LOTES | 1 segundo | Pausa entre os lotes |
+| MAX_TENTATIVAS | 3 | Número máximo de tentativas em caso de falha |
+
+Esses parâmetros permitem ajustar o comportamento da ingestão conforme a necessidade do projeto e as condições de disponibilidade da API.
+
 
 ## 10. Resultados e arquivos gerados
 
@@ -176,3 +203,8 @@ Os arquivos finais são particionados por ano e mês e utilizam compressão Snap
 O projeto demonstra a aplicação prática de conceitos de Engenharia de Dados, incluindo integração de APIs, ingestão em lotes, tratamento de falhas, processamento com Python e SQL, enriquecimento de dados e validação automatizada da qualidade.
 
 A referência geográfica contempla os 5.571 municípios retornados pela API do IBGE. A amostra climática contempla 230 municípios e não representa a totalidade dos municípios brasileiros.
+
+
+
+
+

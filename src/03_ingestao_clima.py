@@ -1,11 +1,20 @@
 
 from pathlib import Path
+from typing import Any
 import time
 import requests
 import pandas as pd
 
+# Configurações de controle da API
 
-def consultar_openmeteo(lote: pd.DataFrame) -> list:
+TAMANHO_LOTE = 10
+INTERVALO_ENTRE_LOTES = 1
+MAX_TENTATIVAS = 3
+
+
+def consultar_openmeteo(
+    lote: pd.DataFrame
+) -> list[dict[str, Any]]:
     """
     Consulta a API Open-Meteo para um lote de municípios.
     """
@@ -26,7 +35,7 @@ def consultar_openmeteo(lote: pd.DataFrame) -> list:
         "timezone": "America/Sao_Paulo"
     }
 
-    for tentativa in range(1, 4):
+    for tentativa in range(1, MAX_TENTATIVAS + 1):
         try:
             resposta = requests.get(
                 url,
@@ -46,7 +55,7 @@ def consultar_openmeteo(lote: pd.DataFrame) -> list:
         except requests.exceptions.RequestException as erro:
             print(f"Falha na tentativa {tentativa}: {erro}")
 
-            if tentativa == 3:
+            if tentativa == MAX_TENTATIVAS:
                 raise
 
             time.sleep(tentativa * 5)
@@ -64,7 +73,7 @@ def executar_ingestao() -> None:
     municipios = pd.read_parquet(arquivo_municipios)
 
     registros = []
-    tamanho_lote = 10
+    tamanho_lote = TAMANHO_LOTE
 
     total_lotes = (len(municipios) + tamanho_lote - 1) // tamanho_lote
 
@@ -98,7 +107,7 @@ def executar_ingestao() -> None:
             registros.append(df)
 
         # Controle de frequência entre lotes
-        time.sleep(1)
+        time.sleep(INTERVALO_ENTRE_LOTES)
 
     df_final = pd.concat(registros, ignore_index=True)
 

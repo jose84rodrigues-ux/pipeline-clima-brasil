@@ -6,7 +6,13 @@ import pandas as pd
 import geopandas as gpd
 
 
-def consultar_api_ibge(url: str, tentativas: int = 3) -> list:
+from typing import Any
+
+
+def consultar_api_ibge(
+    url: str,
+    tentativas: int = 3
+) -> list[dict[str, Any]]:
     """
     Consulta a API do IBGE com tentativas automáticas.
     """
@@ -33,7 +39,7 @@ def consultar_api_ibge(url: str, tentativas: int = 3) -> list:
     raise RuntimeError("Não foi possível consultar a API do IBGE.")
 
 
-def executar_ingestao_ibge():
+def executar_ingestao_ibge() -> None:
     projeto = Path(__file__).resolve().parent.parent
     pasta_referencia = projeto / "data" / "reference"
 
