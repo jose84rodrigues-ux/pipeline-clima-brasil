@@ -1,12 +1,11 @@
 
 from pathlib import Path
+from typing import Dict, Union
 import pandas as pd
 import json
 
 
-def executar_testes(
-    df: pd.DataFrame
-) -> dict[str, int | float]:
+def executar_testes(df: pd.DataFrame) -> Dict[str, Union[int, float]]:
     resultados = {}
 
     # 1. Validar esquema
